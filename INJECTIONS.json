@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "description": "Desktop-to-car priority message queue. Claude Code appends entries; Android app polls and surfaces them at moments when Sonnet TTS finishes. Phone clears entries after surfacing them.",
+  "queue": []
+}
