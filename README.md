@@ -2,6 +2,10 @@
 
 Car-to-Code Workflow Automation — bridges hands-free voice discovery during car commutes with active Claude Code development at the desktop, via a GitHub-backed Inbox/Outbox pattern.
 
+## 👉 Start here
+
+**Any AI joining the project:** read `AI_HANDOFF.md` first. It contains the current state, what each AI should do next, and how to resume sessions.
+
 ## Repository Map
 
 ### Architecture & Review Documents
