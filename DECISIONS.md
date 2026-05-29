@@ -106,3 +106,48 @@ Before any Phase 1 implementation work begins, a Phase 0 spike validates:
 3. **Bluetooth steering-wheel Next-Track barge-in reliability** in user's actual vehicle. Pass: reliable across 20 attempts.
 
 If any criterion fails, architecture is revised before continuing.
+
+---
+
+## 2026-05-29 — Tier 1 + Tier 2 Logistics Resolved
+
+Resolved interactively in Claude Code conversation. These items unblock Phase 0 (STT spike) and Phase 1 completion.
+
+### Dev Environment
+
+- **Android dev IDE:** Android Studio installed locally on Linux workstation.
+- **Test devices:** User has both a daily-driver Android phone and a spare Android device. Spare device preferred for Phase 0/2 dev work; daily-driver used for in-car testing.
+
+### STT Engine Selection
+
+- **Vosk model:** Start with `vosk-model-small-en-us-0.15` (~40 MB) for Phase 0 spike. Iterate up to a larger model only if Phase 0 accuracy gates fail.
+- **Rationale:** Fast download, fast load, low storage cost — supports rapid iteration on the STT abstraction layer before committing to a larger model.
+
+### API Billing
+
+- **Status:** User has both a Claude subscription (powering Claude Code on Linux box) AND API billing set up at `console.anthropic.com`.
+- **For Android app:** Will use a dedicated fine-grained API key generated at `console.anthropic.com`, separate from any keys used elsewhere. Stored in Android Keystore at Phase 2.
+
+### Heartbeat Storage
+
+- **Decision:** GitHub Gist holds `SESSION_STATE` JSON.
+- **Rationale:** Natural fit for JSON state; revision history built in; cleaner than misusing GitHub Repository Variables (which are designed for CI/CD environment values).
+- **Implementation note:** App `PATCH`es the Gist every 3 minutes (piggybacks on micro-batch push cadence). Claude Code reads Gist content via GitHub API before processing inbox.
+
+### Cloud Backup for Credentials
+
+- **Decision:** Google Drive holds daily encrypted backup of Claude API key and GitHub token.
+- **Rationale:** Native Android integration; user already has access.
+
+### Token-Spend Alert Delivery
+
+- **Decision:** TTS announcement at next session start, when monthly soft threshold ($100) is crossed.
+- **Format:** `"You're at $X of your $100 monthly limit. Continue?"`
+- **Rationale:** Aligns with hands-free philosophy; user gets the alert in the workflow context where it matters.
+
+### Carryover Pending Actions
+
+- [ ] Install Android Studio on Linux workstation (sudo required — user runs in PuTTY).
+- [ ] Generate fine-grained Anthropic API key dedicated to the Android app at `console.anthropic.com` (when Phase 2 begins).
+- [ ] Generate fine-grained GitHub token scoped to `arcscribe-engine` (when Phase 5 begins — Android app needs this to push to `/inbox`).
+- [ ] Create the dedicated Gist for `SESSION_STATE` storage and record its ID in `BEHAVIORS.md` (when Phase 5 begins).

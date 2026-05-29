@@ -12,19 +12,26 @@ Format: `[ ] Item — context / dependency`
 - [ ] End-to-end median voice turn-around latency (target: ≤4 seconds).
 - [ ] Bluetooth steering-wheel Next-Track barge-in reliability in user's vehicle (target: reliable across 20 attempts).
 
-## High Priority — Resolve Before Phase 2 Build
+## Pending Strategic / Design Decisions
 
-- [ ] **Token-spend alert delivery mechanism.** Email? In-app TTS at next session start? GitHub Issue? Pick one.
-- [ ] **Cloud backup provider for credentials.** Drive / Dropbox / S3 / other?
-- [ ] **Heartbeat storage choice:** GitHub Gist vs. GitHub Repository Variable. (Repo Variable simpler if it works for our use case; Gist more flexible.)
+Best resolved in adversarial review with Claude.ai + Gemini before encoding here.
 
-## To Resolve During Build (carried from v4.0 §15, adjusted)
+- [ ] **First dogfood project.** Is `arcscribe-engine` itself the test subject (circular — can't dogfood before it exists), or is there a separate first project the workflow will drive?
+- [ ] **Desktop workflow trigger.** How does Claude Code know to process inbox after a drive — manual command, cron, inotify watch, autotrigger? Affects Phase 5 design.
+- [ ] **Privacy posture.** Any redaction step before car-conversation content reaches GitHub? Topics or terms to filter?
+- [ ] **Mid-drive failure mode UX.** If the app freezes or API hangs while driving, what's the recovery flow? Voice command? Reboot at a stoplight? Kill switch?
+- [ ] **Inbox JSON schema design.** Legal sync types, required fields, ID/reference scheme, supersede/invalidate semantics. **Pulled forward from "resolve during build" — finalize before Phase 4 starts.**
+- [ ] **Haiku system prompt design.** Same — design before Phase 4 begins. Depends on inbox JSON schema.
 
-- [ ] Exact Haiku system prompt design for consistent JSON output across all sync types.
-- [ ] Optimal Vosk configuration for car environment (replaces v4.0's "SpeechRecognizer config" item).
+## Pending Setup Actions
+
+See `DECISIONS.md` → "Carryover Pending Actions" for the canonical list (Android Studio install, dedicated API key generation, GitHub token, Gist creation).
+
+## To Resolve During Build (carried from v4.0 §15, trimmed)
+
+- [ ] Optimal Vosk configuration for car environment (gain control, noise suppression, partial-result handling).
 - [ ] GitHub API rate limit handling specifics — what counts as "too fast"?
 - [ ] Android background service behavior across Android 12+ and battery-saver modes.
-- [ ] Inbox JSON schema final design.
 - [ ] Context document format optimization (see `CONTEXT_TEMPLATE.md`).
 - [ ] GitHub issue template design.
 - [ ] Fine-grained GitHub token rotation procedure (1-year expiry).

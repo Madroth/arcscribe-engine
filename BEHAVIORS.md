@@ -33,9 +33,24 @@ Single source of truth for runtime parameters and Claude Code's behavioral defau
 - **Per-session input-token cap (Sonnet + Haiku combined):** 250,000.
   - When hit, session cleanly ends with TTS notice. User can start a new session.
 - **Monthly spend soft alert:** USD $100.
-  - Alert mechanism: TBD (see `DISCOVERY.md`).
+  - Delivery: TTS announcement at next session start when threshold is crossed.
+  - Format: `"You're at $X of your $100 monthly limit. Continue?"`
 - **Monthly spend hard cutoff:** USD $200.
   - Sessions refuse to start until next month.
+
+## Heartbeat Storage
+
+- **Location:** Dedicated GitHub Gist (NOT this repo). Gist ID recorded here once created at Phase 5 start.
+- **Update mechanism:** App `PATCH`es the Gist every 3 minutes (piggybacks on micro-batch push cadence).
+- **Reader:** Claude Code reads Gist content via GitHub API before processing inbox.
+- **Gist ID:** *TBD — populate at Phase 5 start.*
+
+## Credential Backup
+
+- **Provider:** Google Drive.
+- **Cadence:** Daily.
+- **Contents:** Encrypted blob containing Claude API key + GitHub fine-grained token.
+- **Recovery procedure:** Documented at Phase 8 polish.
 
 ## Voice Commands
 
